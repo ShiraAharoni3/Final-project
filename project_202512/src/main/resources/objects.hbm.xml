@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.ashcollege.entities.EducationLevelEntity" table="education_level" lazy="false">
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="level" type="int" column="name"/>
+    </class>
+    <class name="com.ashcollege.entities.TopicEntity" table="topics" lazy="false">
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="name" type="string" column="name"/>
+    </class>
+
+    <class name="com.ashcollege.entities.UserEntity" table="users" lazy="false">
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="username" type="string" column="username"/>
+        <property name="token" type="string" column="token"/>
+        <property name="firstName" type="string" column="firstName"/>
+        <property name="lastName" type="string" column="lastName"/>
+        <property name="email" type="string" column="email"/>
+        <property name="role" type="string" column="role"/>
+        <property name="phoneNumber" type="java.lang.String" column="phone"/>
+        <property name="otp" type="java.lang.String" column="otp"/>
+        <property name="passwordRecovery" type="java.lang.String" column="pass_recovery"/>
+        <!--        <set name="course" table="user_courses" lazy="true">-->
+        <!--            <key column="user_id"/>-->
+        <!--            <many-to-many column="course_id" class="com.ashcollege.entities.CourseEntity"/>-->
+        <!--        </set>-->
+
+    </class>
+
+    <class name="com.ashcollege.entities.QuestionEntity" table="questions" lazy="false">
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="difficultyLevel" type="int" column="difficultyLevel"/>
+        <property name="questionText" type="string" column="questionText"/>
+        <property name="solution" type="double" column="answer"/>
+        <property name="subject" type="string" column="subject"/>
+        <property name="createdAt" type="java.time.LocalDateTime" column="createdAt"/>
+    </class>
+    <class name="com.ashcollege.entities.UserQuestionStatusEntity" table="UserQuestionStatus" lazy="false">
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <many-to-one name="userEntity" column="user_id" class="com.ashcollege.entities.UserEntity"/>
+        <many-to-one name="questionEntity" column="question_id" class="com.ashcollege.entities.QuestionEntity"/>
+        <many-to-one name="topicEntity" column="topic_id" class="com.ashcollege.entities.TopicEntity"/>
+        <property name="is_answered" column="is_answered" type="boolean"/>
+        <property name="is_correct" column="is_correct" type="boolean"/>
+        <property name="numberOfResponseAttempts" column="number_of_response_attempts" type="int"/>
+        <property name="numberOfAttemptsUntilSuccess" column="number_of_attempts_until_success" type="int"/>
+
+    </class>
+    <class name="com.ashcollege.entities.UserStatistics" table="UserStatistics" lazy="false">
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <many-to-one name="userEntity" column="user_id" class="com.ashcollege.entities.UserEntity"/>
+        <property name="additionStatistic" column="addition_statistic" type="double"/>
+        <property name="subtractionStatistic" column="subtraction_statistic" type="double"/>
+        <property name="multiplicationStatistic" column="multiplication_statistic" type="double"/>
+        <property name="divisionStatistic" column="division_statistic" type="double"/>
+        <property name="successStatistic" column="success_statistic" type="double"/>
+    </class>
+    <class name="com.ashcollege.entities.DailyChallengeQuestionEntity" table="DailyChallengeQuestion" lazy="false">
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="questionText" column="questionText" type="java.lang.String"/>
+        <property name="answer" column="answer" type="double"/>
+        <property name="createdAt" type="java.time.LocalDateTime" column="createdAt"/>
+    </class>
+    <class name="com.ashcollege.entities.DailyUserSuccess" table="dailyUserSuccess" lazy="false">
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <many-to-one name="user" column="user_id" class="com.ashcollege.entities.UserEntity"/>
+        <property name="sunday" column="sunday" type="int"/>
+        <property name="monday" column="monday" type="int"/>
+        <property name="tuesday" column="tuesday" type="int"/>
+        <property name="wednesday" column="wednesday" type="int"/>
+        <property name="thursday" column="thursday" type="int"/>
+        <property name="friday" column="friday" type="int"/>
+        <property name="saturday" column="saturday" type="int"/>
+    </class>
+
+
+</hibernate-mapping>
